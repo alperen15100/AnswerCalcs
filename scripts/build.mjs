@@ -7,6 +7,7 @@ const BASE_PATH = (process.env.BASE_PATH ?? '/AnswerCalcs').replace(/\/$/, '');
 const SITE_URL = (process.env.SITE_URL ?? 'https://alperen15100.github.io/AnswerCalcs').replace(/\/$/, '');
 const PROD_PLACEHOLDER = 'https://answercalcs.com';
 const PREVIEW_NOINDEX = process.env.PREVIEW_NOINDEX === '1';
+const SITEMAP_FILES = ['/sitemap.xml','/sitemaps/core.xml','/sitemaps/time-date.xml','/sitemaps/math.xml','/sitemaps/converters.xml','/sitemaps/money.xml','/sitemaps/geometry.xml'];
 
 const ensure = p => fs.mkdir(p, { recursive: true });
 const routeToFile = route => {
@@ -48,19 +49,12 @@ for (const route of routes) {
   await fs.writeFile(file, body);
 }
 
-for (const route of ['/robots.txt','/sitemap.xml','/manifest.webmanifest','/llms.txt']) {
+for (const route of ['/robots.txt',...SITEMAP_FILES,'/manifest.webmanifest','/llms.txt']) {
   const res = await worker.fetch(new Request(`${PROD_PLACEHOLDER}${route}`));
   const type = res.headers.get('content-type') || '';
   let body = rewrite(await res.text(), type);
   if (PREVIEW_NOINDEX && route === '/robots.txt') {
     body = 'User-agent: *\nDisallow: /\n';
-  }
-  if (route === '/sitemap.xml') {
-    for (const extra of ['/about/','/privacy/','/terms/','/contact/']) {
-      if (!body.includes(`${SITE_URL}${extra}`)) {
-        body = body.replace('</urlset>', `<url><loc>${SITE_URL}${extra}</loc></url></urlset>`);
-      }
-    }
   }
   const file = routeToFile(route);
   await ensure(path.dirname(file));

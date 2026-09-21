@@ -1,4 +1,4 @@
-import worker,{daysFromToday,weeksFromToday,howLongUntil,percentQuestion,conversionQuestion,fractionQuestion,ratioQuestion,loanQuestion,salaryQuestion,gradeQuestion,compoundInterestQuestion,discountQuestion,tipQuestion,areaQuestion,volumeQuestion,sitemap} from '../src/index.js';
+import worker,{home,daysFromToday,weeksFromToday,howLongUntil,percentQuestion,conversionQuestion,fractionQuestion,ratioQuestion,loanQuestion,salaryQuestion,gradeQuestion,compoundInterestQuestion,discountQuestion,tipQuestion,areaQuestion,volumeQuestion,sitemap,sitemapIndex,sitemapSegment} from '../src/index.js';
 const assert=(x,m)=>{if(!x)throw new Error(m)};
 assert(daysFromToday(30,new Date('2026-09-21T12:00:00Z')).includes('October 21, 2026'),'30-day date failed');
 assert(weeksFromToday(6,new Date('2026-09-21T12:00:00Z')).includes('November 2, 2026'),'6-week date failed');
@@ -30,6 +30,10 @@ assert(sitemap().includes('/discount/20-percent-off-100/'),'sitemap missing disc
 assert(sitemap().includes('/tip/20-percent-on-80-split-2/'),'sitemap missing tip URL');
 assert(sitemap().includes('/area/circle-radius-5/'),'sitemap missing area URL');
 assert(sitemap().includes('/volume/box-4-by-5-by-10/'),'sitemap missing volume URL');
+assert(sitemapIndex().includes('/sitemaps/time-date.xml')&&sitemapIndex().includes('/sitemaps/money.xml'),'sitemap index missing segments');
+assert(sitemapSegment('converters').includes('/convert/10-kg-to-lb/')&&!sitemapSegment('converters').includes('/loan/'),'converter sitemap segmentation failed');
+assert(sitemapSegment('money').includes('/loan/10000-at-6-for-5-years/'),'money sitemap segmentation failed');
+assert(home().includes('application/ld+json'),'home JSON-LD missing');
 assert(sitemap().includes('/loan-calculator/'),'sitemap missing loan calculator');
 assert(sitemap().includes('/compound-interest-calculator/'),'sitemap missing compound interest calculator');
 const loan=await worker.fetch(new Request('https://example.com/loan-calculator/'));assert(loan.status===200,'loan calculator route failed');

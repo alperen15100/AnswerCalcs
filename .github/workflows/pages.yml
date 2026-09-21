@@ -40,6 +40,11 @@ jobs:
           PREVIEW_NOINDEX: "1"
         run: npm run build
 
+      - name: SEO quality audit
+        env:
+          BASE_PATH: /AnswerCalcs
+        run: npm run seo:audit
+
       - name: Configure Pages
         uses: actions/configure-pages@v6
         with:
