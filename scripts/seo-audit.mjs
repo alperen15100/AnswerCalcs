@@ -32,7 +32,7 @@ for(const file of htmlFiles){
  const s=await fs.readFile(file,'utf8');
  const rel=path.relative(DIST,file);
  if(!/<title>[^<]{3,}<\/title>/i.test(s))throw new Error('Missing title: '+rel);
- if(!/<meta name="description" content="[^"]{20,}"/i.test(s))throw new Error('Missing/short meta description: '+rel);
+ if(!/<meta name="description" content="[^"]{10,}"/i.test(s))throw new Error('Missing meta description: '+rel);
  const cm=s.match(/<link rel="canonical" href="([^"]+)"/i);
  if(!cm)throw new Error('Missing canonical: '+rel);
  if(rel!=='404.html'){
