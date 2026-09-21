@@ -116,14 +116,14 @@ function fractionQuestion(num,den){
  num=Number(num);den=Number(den);if(!Number.isInteger(num)||!Number.isInteger(den)||den===0||Math.abs(num)>1000||Math.abs(den)>1000)return null;
  const g=gcdInt(num,den),sn=num/g,sd=den/g,decimal=num/den,clean=n=>new Intl.NumberFormat('en-US',{maximumFractionDigits:8}).format(n),pct=decimal*100;
  const title=`What Is ${num}/${den} as a Decimal and Percent?`,desc=`${num}/${den} equals ${clean(decimal)} as a decimal and ${clean(pct)}%.`;
- const rel=[['Fraction calculator','/fraction-calculator/'],[`1/${den} as a decimal`,`/fraction/1-${den}/`],[`${Math.max(1,num-1)}/${den} as a decimal`,`/fraction/${Math.max(1,num-1)}-${den}/`],[`${Math.min(den-1,num+1)}/${den} as a decimal`,`/fraction/${Math.min(den-1,num+1)}-${den}/`]];
+ const rel=[['Fraction calculator','/fraction-calculator/'],['1/2 as a decimal','/fraction/1-2/'],['2/3 as a decimal','/fraction/2-3/'],['3/4 as a decimal','/fraction/3-4/']];
  return toolShell(title,desc,`/fraction/${num}-${den}/`,clean(decimal),[['Fraction',`${num}/${den}`],['Simplified',`${sn}/${sd}`],['Decimal',clean(decimal)],['Percent',clean(pct)+'%']],`<div class="calc"><p><strong>Fraction:</strong> ${num} ÷ ${den} = ${clean(decimal)}</p><p><strong>Percent:</strong> ${clean(decimal)} × 100 = ${clean(pct)}%</p></div>`,rel)
 }
 function ratioQuestion(a,b){
  a=Number(a);b=Number(b);if(!Number.isInteger(a)||!Number.isInteger(b)||a===0||b===0||Math.abs(a)>10000||Math.abs(b)>10000)return null;
  const g=gcdInt(a,b),sa=a/g,sb=b/g,decimal=a/b,clean=n=>new Intl.NumberFormat('en-US',{maximumFractionDigits:8}).format(n);
  const title=`Simplify the Ratio ${a}:${b}`,desc=`The ratio ${a}:${b} simplifies to ${sa}:${sb}.`;
- const rel=[['Ratio calculator','/ratio-calculator/'],[`Simplify ${a*2}:${b*2}`,`/ratio/${a*2}-to-${b*2}/`],[`Simplify ${a}:${b+1}`,`/ratio/${a}-to-${b+1}/`],['Fraction calculator','/fraction-calculator/']];
+ const rel=[['Ratio calculator','/ratio-calculator/'],['Simplify 10:20','/ratio/10-to-20/'],['Simplify 12:15','/ratio/12-to-15/'],['Simplify 5:10','/ratio/5-to-10/']];
  return toolShell(title,desc,`/ratio/${a}-to-${b}/`,`${sa} : ${sb}`,[['Original',`${a}:${b}`],['GCD',g],['Simplified',`${sa}:${sb}`],['A ÷ B',clean(decimal)]],`<div class="calc"><p>Divide both parts by their greatest common divisor, ${g}: ${a} ÷ ${g} = ${sa} and ${b} ÷ ${g} = ${sb}.</p></div>`,rel)
 }
 
