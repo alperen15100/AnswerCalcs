@@ -1,4 +1,4 @@
-import worker,{daysFromToday,weeksFromToday,howLongUntil,percentQuestion,conversionQuestion,sitemap} from '../src/index.js';
+import worker,{daysFromToday,weeksFromToday,howLongUntil,percentQuestion,conversionQuestion,fractionQuestion,ratioQuestion,sitemap} from '../src/index.js';
 const assert=(x,m)=>{if(!x)throw new Error(m)};
 assert(daysFromToday(30,new Date('2026-09-21T12:00:00Z')).includes('October 21, 2026'),'30-day date failed');
 assert(weeksFromToday(6,new Date('2026-09-21T12:00:00Z')).includes('November 2, 2026'),'6-week date failed');
@@ -7,5 +7,12 @@ assert(sitemap().includes('/days-from-today/90/'),'sitemap missing core URL');
 assert(percentQuestion(20,50).includes('20% of 50 is 10'),'percentage pSEO failed');
 assert(conversionQuestion(10,'kg-to-lb').includes('22.04622622 lb'),'conversion pSEO failed');
 assert(sitemap().includes('/convert/10-kg-to-lb/'),'sitemap missing conversion URL');
+assert(conversionQuestion(1,'cup-to-ml').includes('236.5882365 mL'),'cup conversion failed');
+assert(conversionQuestion(60,'mph-to-kmh').includes('96.56064 km/h'),'speed conversion failed');
+assert(fractionQuestion(3,4).includes('75%'),'fraction pSEO failed');
+assert(ratioQuestion(12,18).includes('2 : 3'),'ratio pSEO failed');
+assert(sitemap().includes('/days-from-today/365/'),'sitemap missing 365-day page');
+assert(sitemap().includes('/fraction/3-4/'),'sitemap missing fraction URL');
+assert(sitemap().includes('/ratio/12-to-20/'),'sitemap missing ratio URL');
 const r=await worker.fetch(new Request('https://example.com/percentage-calculator/'));assert(r.status===200,'worker route failed');
 console.log('All AnswerCalcs tests passed.');
