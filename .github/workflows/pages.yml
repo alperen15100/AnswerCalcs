@@ -36,6 +36,7 @@ jobs:
         env:
           BASE_PATH: /AnswerCalcs
           SITE_URL: https://alperen15100.github.io/AnswerCalcs
+          PREVIEW_NOINDEX: "1"
         run: npm run build
 
       - name: Configure Pages
